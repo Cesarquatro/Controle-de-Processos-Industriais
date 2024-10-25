@@ -6,9 +6,9 @@
   * 22/10/2024
   */
 
-const int SENSOR_PIN = A0;  // Pino de entrada analógico (sensor)
-const int CONTROL_PIN = 3;  // Pino de saída PWM (controlador)
-const int POTENTIOMETER_PIN = A1;    // Pino onde o potenciômetro está conectado
+const int SENSOR_PIN = 4;  // Pino de entrada analógico (sensor)
+const int CONTROL_PIN = 23;  // Pino de saída PWM (controlador)
+const int POTENTIOMETER_PIN = 15;    // Pino onde o potenciômetro está conectado
 
 double dt, last_time;  // Variáveis para armazenar o tempo entre amostras e o tempo da última iteração
 double integral = 0, previous_error = 0, previous_filtered_derivative = 0, output = 0;  // Variáveis para o cálculo do controlador PID
@@ -56,7 +56,7 @@ void setup(){
 
 void loop(){
   // Lê o valor do potenciômetro (entre 0 e 1023) e ajusta o setpoint dinamicamente
-  // setpoint = map(analogRead(POTENTIOMETER_PIN), 0, 1023, 0, 255);  // Ajusta o setpoint entre 0 e 255 (descomentado se o potenciômetro for usado)
+  setpoint = map(analogRead(POTENTIOMETER_PIN), 0, 1023, 0, 255);  // Ajusta o setpoint entre 0 e 255 (descomentado se o potenciômetro for usado)
 
   double now = millis();  // Armazena o tempo atual em milissegundos
   dt = (now - last_time) / 1000.00;  // Calcula o intervalo de tempo (dt) em segundos
@@ -83,7 +83,7 @@ void loop(){
   Serial.print(",");
   Serial.println(output);              // Imprime o valor de saída PID
 
-  delay(12);  // Insere um atraso no loop para ajustar a taxa de amostragem (opcional)
+  delay(100);  // Insere um atraso no loop para ajustar a taxa de amostragem (opcional)
 }
 
 double pid_skogestad(double error, double actual, double setpoint){
