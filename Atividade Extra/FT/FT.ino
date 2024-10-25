@@ -28,8 +28,7 @@ double alpha; // Coeficiente de filtro derivativo (para suavizar o termo derivat
 double K = 1.0;  // Ganho estático do sistema (ajustar conforme necessário)
 double tau = 0.5;  // Constante de tempo do sistema (ajustar conforme necessário)
 
-void setup()
-{
+void setup(){
   // Aplicando a sintonia de Skogestad para definir os ganhos do PID
   kp = 1.0 / (K * (tau + 0));  // Skogestad sugere o uso do atraso de transporte theta, que aqui é considerado 0
   ki = kp / tau;               // O ganho integral é o ganho proporcional dividido por tau
@@ -45,8 +44,7 @@ void setup()
   startTime = millis();        // Armazena o tempo inicial em milissegundos
 
   // Loop inicial para imprimir zeros na fase de configuração do sistema
-  for (int i = 0; i < 50; i++)
-  {
+  for (int i = 0; i < 50; i++){
     currentTime = (millis() - startTime) / 1000.0;  // Calcula o tempo decorrido em segundos
     Serial.print(currentTime);  // Imprime o tempo decorrido
     Serial.print(",");
@@ -56,8 +54,7 @@ void setup()
   delay(100);  // Pequeno atraso adicional para permitir que o sistema estabilize
 }
 
-void loop()
-{
+void loop(){
   // Lê o valor do potenciômetro (entre 0 e 1023) e ajusta o setpoint dinamicamente
   // setpoint = map(analogRead(POTENTIOMETER_PIN), 0, 1023, 0, 255);  // Ajusta o setpoint entre 0 e 255 (descomentado se o potenciômetro for usado)
 
@@ -89,8 +86,7 @@ void loop()
   delay(12);  // Insere um atraso no loop para ajustar a taxa de amostragem (opcional)
 }
 
-double pid_skogestad(double error, double actual, double setpoint)
-{
+double pid_skogestad(double error, double actual, double setpoint){
   // Termo proporcional com ponderação de setpoint
   double proportional;
   if (use_reference_weighting) {
