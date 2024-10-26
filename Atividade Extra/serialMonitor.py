@@ -8,14 +8,14 @@
 
 import serial  # Importa o módulo para comunicação serial
 import pyqtgraph as pg  # Importa a biblioteca de plotagem em tempo real PyQtGraph
-from pyqtgraph.Qt import QtCore, QtGui  # Importa classes essenciais do PyQtGraph para interfaces gráficas
+from pyqtgraph.Qt import QtCore, QtGui, QtWidgets    # Importa classes essenciais do PyQtGraph para interfaces gráficas
 import time  # Importa a biblioteca de gerenciamento de tempo
 
 # Configuração da porta serial (modifique conforme necessário)
-ser = serial.Serial('COM7', 115200, timeout=0.1)  # Define a comunicação serial na porta 'COM7' com taxa de 115200 bps
+ser = serial.Serial('COM17', 115200, timeout=0.1)  # Define a comunicação serial na porta 'COM7' com taxa de 115200 bps
 
-# Configuração da janela de plotagem usando PyQtGraph
-app = QtGui.QApplication([])  # Inicializa a aplicação PyQt
+# Configuração da janela de plotagem usando PyQtGraphQQ
+app = QtWidgets.QApplication([]) # Inicializa a aplicação PyQt
 win = pg.GraphicsLayoutWidget(show=True, title="Leitura Serial em Tempo Real")  # Cria uma janela de gráficos
 win.resize(800, 600)  # Ajusta o tamanho da janela de gráficos
 win.setWindowTitle('PID Controller - Arduino UNO')  # Define o título da janela
