@@ -34,9 +34,15 @@ def animate(i, dataList, ser):
     ax.clear()  # Limpa o gráfico para nova atualização
 
     # Plota cada variável na mesma tela com diferentes cores e legendas
-    ax.plot(dataList["Tempo(s)"], dataList["Setpoint"], label=f"Setpoint = {dataList['Setpoint'][-1]}", color='b', linestyle='--', linewidth=5)
-    ax.plot(dataList["Tempo(s)"], dataList["Valor Atual"], label=f"Valor Atual = {dataList['Valor Atual'][-1]}", color='g')
-    ax.plot(dataList["Tempo(s)"], dataList["Erro"], label=f"Erro = {dataList['Erro'][-1]}", color='r')
+    ax.plot(dataList["Tempo(s)"], dataList["Setpoint"], 
+            label=f"Setpoint = {dataList['Setpoint'][-1]}",
+            color='b', linestyle='--', linewidth=5)
+    ax.plot(dataList["Tempo(s)"], dataList["Valor Atual"],
+            label=f"Valor Atual = {dataList['Valor Atual'][-1]}",
+            color='g')
+    ax.plot(dataList["Tempo(s)"], dataList["Erro"],
+            label=f"Erro = {dataList['Erro'][-1]}",
+            color='r')
     # ax.plot(dataList["Tempo(s)"], dataList["Saída PWM"], label="Saída PWM", color='m')
 
     # Configurações do gráfico
