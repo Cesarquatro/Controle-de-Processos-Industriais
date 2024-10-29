@@ -3,20 +3,21 @@ import time
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 # this port address is for the serial tx/rx pins on the GPIO header
-SERIAL_PORT = 'COM17'
+SERIAL_PORT = 'COM16'
 # be sure to set this to the same rate used on the Arduino
 SERIAL_RATE = 115200
 
-dataList = {"Tempo(s)"    :[], 
-            "Setpoint"    :[], 
-            "Erro"        :[],
-            "Valor Atual" :[],
-            "Saída PWM"   :[]}
+dataList = {"Tempo(s)"    :[0, 0, 0], 
+            "Setpoint"    :[0, 0, 0], 
+            "Erro"        :[0, 0, 0],
+            "Valor Atual" :[0, 0, 0],
+            "Saída PWM"   :[0, 0, 0]}
 Keys = list(dataList.keys())
 
 # Função de animação para atualizar o gráfico em tempo real
 def animate(i, dataList, ser):
-    reading = ser.readline().decode('utf-8')  # Lê dados da porta serial e decodifica para string
+    #reading = ser.readline().decode('utf-8')  # Lê dados da porta serial e decodifica para string
+    reading = ser.readline().decode('ascii') 
     
     try:
         reading = [float(value) for value in reading.strip().split(',')]  # Converte dados para float
@@ -57,7 +58,7 @@ fig, ax = plt.subplots(figsize=(10, 6))
 
 # Inicializa a comunicação serial
 ser = serial.Serial(SERIAL_PORT, SERIAL_RATE, timeout=0.1)
-time.sleep(2)
+time.sleep(.2)
 
 # Configuração da animação
 ani = animation.FuncAnimation(fig, animate, fargs=(dataList, ser), interval=0.1, frames=144)
