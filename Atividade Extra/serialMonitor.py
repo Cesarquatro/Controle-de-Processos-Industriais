@@ -7,11 +7,11 @@ SERIAL_PORT = 'COM16'
 # be sure to set this to the same rate used on the Arduino
 SERIAL_RATE = 115200
 
-dataList = {"Tempo(s)"    :[0, 0, 0], 
-            "Setpoint"    :[0, 0, 0], 
-            "Erro"        :[0, 0, 0],
-            "Valor Atual" :[0, 0, 0],
-            "Saída PWM"   :[0, 0, 0]}
+dataList = {"Tempo(s)"    :[], 
+            "Setpoint"    :[], 
+            "Erro"        :[],
+            "Valor Atual" :[],
+            "Saída PWM"   :[]}
 Keys = list(dataList.keys())
 
 # Função de animação para atualizar o gráfico em tempo real
@@ -24,27 +24,27 @@ def animate(i, dataList, ser):
         if len(reading) == len(Keys):  # Verifica se o número de valores recebidos corresponde às chaves
             for i in range(len(reading)):
                 dataList[Keys[i]].append(reading[i])  # Adiciona os valores ao dataList
+        for key in Keys:
+            dataList[key] = dataList[key][-50:]
+        
+        ax.clear()  # Limpa o gráfico para nova atualização
 
+        # Plota cada variável na mesma tela com diferentes cores e legendas
+        ax.plot(dataList["Tempo(s)"], dataList["Setpoint"], 
+                label=f"Setpoint = {dataList['Setpoint'][-1]}",
+                color='b', linestyle='--', linewidth=5)
+        ax.plot(dataList["Tempo(s)"], dataList["Valor Atual"],
+                label=f"Valor Atual = {dataList['Valor Atual'][-1]}",
+                color='g')
+        ax.plot(dataList["Tempo(s)"], dataList["Erro"],
+                label=f"Erro = {dataList['Erro'][-1]}",
+                color='r')
+        # ax.plot(dataList["Tempo(s)"], dataList["Saída PWM"], label="Saída PWM", color='m')
     except ValueError:  # Ignora se algum valor não for convertível
         pass
 
     # Limita o tamanho dos dados para 50 elementos para cada chave
-    for key in Keys:
-        dataList[key] = dataList[key][-50:]
-    
-    ax.clear()  # Limpa o gráfico para nova atualização
 
-    # Plota cada variável na mesma tela com diferentes cores e legendas
-    ax.plot(dataList["Tempo(s)"], dataList["Setpoint"], 
-            label=f"Setpoint = {dataList['Setpoint'][-1]}",
-            color='b', linestyle='--', linewidth=5)
-    ax.plot(dataList["Tempo(s)"], dataList["Valor Atual"],
-            label=f"Valor Atual = {dataList['Valor Atual'][-1]}",
-            color='g')
-    ax.plot(dataList["Tempo(s)"], dataList["Erro"],
-            label=f"Erro = {dataList['Erro'][-1]}",
-            color='r')
-    # ax.plot(dataList["Tempo(s)"], dataList["Saída PWM"], label="Saída PWM", color='m')
 
     # Configurações do gráfico
     ax.set_xlabel("Tempo(s)")
